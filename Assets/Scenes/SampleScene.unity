@@ -326,6 +326,7 @@ MonoBehaviour:
   playerSafeRadius: 3
   enemyPrefabs:
   - {fileID: 6948732339227546069, guid: 869df2cc3836094429e33b35d9ac5436, type: 3}
+  - {fileID: 6948732339227546069, guid: d7e7fb16f0e57894cbe429f3ffd27e58, type: 3}
   player: {fileID: 1243262089}
 --- !u!4 &717671129
 Transform:
@@ -493,7 +494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 1916720314}
 --- !u!1 &1322672585
 GameObject:
   m_ObjectHideFlags: 0
