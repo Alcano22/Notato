@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
             enabled = false;
         }
 
-        if (nextSpawnTime <= Time.time)
+        if (nextSpawnTime <= Time.time && Game.Instance.CanSpawnEnemies)
         {
             nextSpawnTime = Time.time + spawnDelay;
 
@@ -39,6 +39,8 @@ public class EnemySpawner : MonoBehaviour
             SpawnEnemy();
             return;
         }
+
+        Game.Instance.CurrentWave.OnEnemySpawn();
 
         Instantiate(prefab, spawnPos, Quaternion.identity);
     }

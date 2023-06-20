@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 5388039822913415000}
   m_Layer: 0
   m_Name: Strong Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,8 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23974bc2394c534791208ce9d6cd377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 30
   movementSpeed: 1
   attackDamage: 20
+  hitSound:
+    clip: {fileID: 8300000, guid: eac25f9c24a16e147845f9bf9455b46d, type: 3}
+    volume: 1
+    pitch: 1
 --- !u!50 &1308173034843397414
 Rigidbody2D:
   serializedVersion: 4

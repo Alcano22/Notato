@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] float health;
     [SerializeField] float movementSpeed;
     [SerializeField] float attackDamage;
+    [SerializeField] Sound hitSound;
 
     Transform player;
     Rigidbody2D rb;
 
     void Awake()
     {
-        player = Player.instance.transform;
+        player = Player.Instance.transform;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -22,13 +24,33 @@ public class Enemy : MonoBehaviour
         rb.MovePosition(movement);
     }
 
+    public void Damage(float damage)
+    {
+        if (damage < 0) return;
+
+        health -= damage;
+
+        hitSound.Play();
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Game.Instance.CurrentWave.OnEnemyKill();
+
+        Destroy(gameObject);
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         Transform other = collision.transform;
         if (!other.CompareTag("Player")) return;
 
         other.GetComponent<Player>().Damage(attackDamage);
-
         Destroy(gameObject);
     }
 }

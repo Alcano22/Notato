@@ -5,15 +5,31 @@ using UnityEngine.UI;
 
 public class UI_HealthBar : MonoBehaviour
 {
+    [SerializeField] float smoothTime;
+
+    float targetValue;
+    float valueRef;
     Slider slider;
+    Animator animator;
 
     void Awake()
     {
         slider = GetComponent<Slider>();
+        animator = GetComponent<Animator>();
     }
 
-    public void UpdateHealth(float health, float maxHealth)
+    void Update()
     {
-        slider.value = health / maxHealth;
+        slider.value = Mathf.SmoothDamp(slider.value, targetValue, ref valueRef, smoothTime);
+    }
+
+    public void UpdateHealth(float health, float maxHealth, bool damage = false)
+    {
+        targetValue = health / maxHealth;
+
+        if (damage)
+        {
+            animator.SetTrigger("Shake");
+        }
     }
 }

@@ -4,28 +4,43 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance { get; private set; }
+    public static Player Instance { get; private set; }
 
     [SerializeField] float health;
     [SerializeField] float maxHealth;
+    [SerializeField] Sound hurtSound;
     [SerializeField] UI_HealthBar healthBar;
 
     void Awake()
     {
-        instance = this;
+        Instance = this;
+    }
+
+    void Start()
+    {
+        healthBar.UpdateHealth(health, maxHealth);
+    }
+
+    void OnValidate()
+    {
+        healthBar.UpdateHealth(health, maxHealth);
     }
 
     public void Damage(float damage)
     {
         if (damage <= 0) return;
 
+        hurtSound.Play();
+
         health -= damage;
-        if (health < 0)
+        if (health <= 0)
         {
             health = 0;
+
+            Game.Instance.OnPlayerDie();
         }
 
-        healthBar.UpdateHealth(health, maxHealth);
+        healthBar.UpdateHealth(health, maxHealth, true);
     }
 
     public void Heal(float heal)

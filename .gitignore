@@ -3,5 +3,4 @@ Temp/
 UserSettings/
 Logs/
 /Notato.sln
-/.vs
-/obj
+.vs/
