@@ -19,6 +19,18 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         spawnPos = transform.position;
+
+        IgnoreAllBulletCollisions();
+    }
+
+    void IgnoreAllBulletCollisions()
+    {
+        foreach (Bullet bullet in FindObjectsOfType<Bullet>())
+        {
+            if (bullet == this) continue;
+
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), bullet.GetComponent<Collider2D>());
+        }
     }
 
     void FixedUpdate()

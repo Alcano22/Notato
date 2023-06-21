@@ -17,6 +17,7 @@ public class Game : MonoBehaviour
     [SerializeField] Sound gameOverSound;
     [SerializeField] GameObject enemySpawner;
     [SerializeField] UI_WaveCounter waveCounter;
+    [SerializeField] UI_EnemyCounter enemyCounter;
     [SerializeField] UI_GameOverDisplay gameOverDisplay;
 
     void Awake()
@@ -46,7 +47,7 @@ public class Game : MonoBehaviour
 
     public void OnWaveStart()
     {
-        CurrentWave = new Wave(WaveIndex, this);
+        CurrentWave = new Wave(WaveIndex, this, enemyCounter);
     }
 
     public void OnPlayerDie()
@@ -67,16 +68,19 @@ public class Game : MonoBehaviour
 public class Wave
 {
     Game game;
+    UI_EnemyCounter enemyCounter;
     int numEnemiesToSpawn;
     int numEnemiesToKill;
 
-    public Wave(int index, Game game)
+    public Wave(int index, Game game, UI_EnemyCounter enemyCounter)
     {
         this.game = game;
+        this.enemyCounter = enemyCounter;
 
-        int numEnemies = (int)(Mathf.Pow(2f, index / 10f) * 10f);
+        int numEnemies = Mathf.FloorToInt(Mathf.Pow(2f, index / 5f) * 10f);
         numEnemiesToSpawn = numEnemies;
         numEnemiesToKill = numEnemies;
+        enemyCounter.UpdateEnemyCount(numEnemies);
 
         game.CanSpawnEnemies = true;
     }
@@ -94,6 +98,7 @@ public class Wave
     public void OnEnemyKill()
     {
         numEnemiesToKill--;
+        enemyCounter.UpdateEnemyCount(numEnemiesToKill);
 
         if (numEnemiesToKill <= 0)
         {
