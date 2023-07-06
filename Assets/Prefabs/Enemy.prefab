@@ -138,6 +138,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: eac25f9c24a16e147845f9bf9455b46d, type: 3}
     volume: 1
     pitch: 1
+  heartPrefab: {fileID: 9116468366427462157, guid: 24bfc73dbb7b35048b33f3560b1fe7d0, type: 3}
 --- !u!50 &1308173034843397414
 Rigidbody2D:
   serializedVersion: 4

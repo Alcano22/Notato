@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   firerate: 300
+  capacity: 15
+  reloadTime: 1.5
   bulletSpeed: 10
   range: 10

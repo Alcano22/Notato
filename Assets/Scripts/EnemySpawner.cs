@@ -24,7 +24,10 @@ public class EnemySpawner : MonoBehaviour
         {
             nextSpawnTime = Time.time + spawnDelay;
 
-            SpawnEnemy();
+            for (int i = 0; i < (Game.Instance.CurrentWave.HordeWave ? 2 : 1); i++)
+            {
+                SpawnEnemy();
+            }
         }
     }
 

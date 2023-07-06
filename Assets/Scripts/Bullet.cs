@@ -14,6 +14,11 @@ public class Bullet : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        foreach (GameObject heart in GameObject.FindGameObjectsWithTag("Heart"))
+        {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), heart.GetComponent<Collider2D>());
+        }
     }
 
     void Start()

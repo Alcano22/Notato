@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private const float HEART_DROP_CHANCE = 5f / 100f;
+
     [SerializeField] float health;
     [SerializeField] float movementSpeed;
     [SerializeField] float attackDamage;
     [SerializeField] Sound hitSound;
+    [SerializeField] GameObject heartPrefab;
 
     Transform player;
     Rigidbody2D rb;
@@ -16,6 +19,10 @@ public class Enemy : MonoBehaviour
     {
         player = Player.Instance.transform;
         rb = GetComponent<Rigidbody2D>();
+
+        foreach (GameObject heart in GameObject.FindGameObjectsWithTag("Heart")) {
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), heart.GetComponent<Collider2D>());
+        }
     }
 
     void FixedUpdate()
@@ -42,13 +49,24 @@ public class Enemy : MonoBehaviour
     {
         Game.Instance.CurrentWave.OnEnemyKill();
 
+        DropHeart();
+
         Destroy(gameObject);
+    }
+
+    void DropHeart()
+    {
+        if (Random.value > HEART_DROP_CHANCE) return;
+
+        Instantiate(heartPrefab, transform.position, Quaternion.identity);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         Transform other = collision.transform;
         if (!other.CompareTag("Player")) return;
+
+        Game.Instance.CurrentWave.OnEnemyHitPlayer();
 
         other.GetComponent<Player>().Damage(attackDamage);
         Destroy(gameObject);

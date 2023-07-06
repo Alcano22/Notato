@@ -17,7 +17,7 @@ public class SoundSystem : MonoBehaviour
 
     public void PlaySound(Sound sound)
     {
-        source.volume = sound.volume;
+        source.volume = sound.volume * Game.Instance.Settings.ScaledRangedSoundVolume;
         source.pitch = sound.pitch;
 
         source.PlayOneShot(sound.clip);

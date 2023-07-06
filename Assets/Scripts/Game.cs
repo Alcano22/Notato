@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,9 @@ public class Game : MonoBehaviour
     public bool CanSpawnEnemies;
 
     bool gameOver;
+    bool leaveGameOnNextEscapePress;
 
+    [SerializeField] GameSettings settings;
     [SerializeField] Sound gameOverSound;
     [SerializeField] GameObject enemySpawner;
     [SerializeField] UI_WaveCounter waveCounter;
@@ -42,7 +45,8 @@ public class Game : MonoBehaviour
     {
         WaveIndex++;
 
-        waveCounter.UpdateWave(WaveIndex, this);
+        CurrentWave = new Wave(WaveIndex, this, enemyCounter);
+        waveCounter.UpdateWave(CurrentWave, this);
     }
 
     public void OnWaveStart()
@@ -63,10 +67,15 @@ public class Game : MonoBehaviour
         gameOverDisplay.Show();
         gameOver = true;
     }
+
+    public GameSettings Settings => settings;
 }
 
 public class Wave
 {
+    public int Index { get; private set; }
+    public bool HordeWave { get; private set; }
+
     Game game;
     UI_EnemyCounter enemyCounter;
     int numEnemiesToSpawn;
@@ -74,14 +83,19 @@ public class Wave
 
     public Wave(int index, Game game, UI_EnemyCounter enemyCounter)
     {
+        Index = index;
+        HordeWave = index.ToString().Last() == '5';
         this.game = game;
         this.enemyCounter = enemyCounter;
 
-        int numEnemies = Mathf.FloorToInt(Mathf.Pow(2f, index / 5f) * 10f);
+        int numEnemies = Mathf.FloorToInt(Mathf.Pow(2f, index / 5f) * 10f) * (HordeWave ? 2 : 1);
         numEnemiesToSpawn = numEnemies;
         numEnemiesToKill = numEnemies;
         enemyCounter.UpdateEnemyCount(numEnemies);
+    }
 
+    public void Start()
+    {
         game.CanSpawnEnemies = true;
     }
 
@@ -104,5 +118,12 @@ public class Wave
         {
             game.NextWave();
         }
+    }
+
+    public void OnEnemyHitPlayer()
+    {
+        numEnemiesToSpawn++;
+
+        game.CanSpawnEnemies = true;
     }
 }

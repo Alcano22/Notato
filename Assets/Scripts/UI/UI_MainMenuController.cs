@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI_MainMenuController : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class UI_MainMenuController : MonoBehaviour
     static readonly Vector2Int CREDITS_SECTION_POSITION = new Vector2Int(0, -1);
 
     [SerializeField] float smoothTime;
+
+    void Awake()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
 
     public void SwitchSection(Vector2Int sectionPosition)
     {
@@ -40,5 +46,15 @@ public class UI_MainMenuController : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void SwitchToGameScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void SwitchToRickrollScene()
+    {
+        SceneManager.LoadScene(2);
     }
 }

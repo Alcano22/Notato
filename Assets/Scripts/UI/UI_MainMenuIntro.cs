@@ -16,7 +16,8 @@ public class UI_MainMenuIntro : MonoBehaviour
                 studioPopup.LeanAlpha(0f, 1f)
                     .setEase(LeanTweenType.easeInOutSine);
                 background.LeanAlpha(0f, 1f)
-                    .setEase(LeanTweenType.easeInOutSine);
+                    .setEase(LeanTweenType.easeInOutSine)
+                    .setOnComplete(() => background.gameObject.SetActive(false));
             }));
     }
 }

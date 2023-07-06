@@ -55,4 +55,15 @@ public class Player : MonoBehaviour
 
         healthBar.UpdateHealth(health, maxHealth);
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Transform other = collision.transform;
+        if (other.CompareTag("Heart"))
+        {
+            Destroy(other.gameObject);
+
+            Heal(30f);
+        }
+    }
 }
