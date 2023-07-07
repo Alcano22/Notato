@@ -50,7 +50,7 @@ public class UI_MainMenuController : MonoBehaviour
 
     public void SwitchToGameScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void SwitchToRickrollScene()

@@ -9,7 +9,7 @@ public class LeaveOnEscape : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(0);
         }
     }
 }

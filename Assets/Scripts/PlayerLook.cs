@@ -40,7 +40,7 @@ public class PlayerLook : MonoBehaviour
         float mouseX = Input.GetAxisRaw("Mouse X");
         float mouseY = Input.GetAxisRaw("Mouse Y");
 
-        Vector3 mouseMovement = new Vector2(mouseX, mouseY) * gameSettings.sensitivity * Time.deltaTime;
+        Vector3 mouseMovement = new Vector2(mouseX, mouseY) * gameSettings.sensitivity / 5f * Time.deltaTime;
         crosshair.position += mouseMovement;
     }
 }

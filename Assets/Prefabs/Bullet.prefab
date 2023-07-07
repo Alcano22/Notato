@@ -50,6 +50,7 @@ MonoBehaviour:
   damage: 0
   speed: 0
   range: 0
+  bulletBurstPrefab: {fileID: 114365953434450101, guid: e3620158a4bfa0e459b4554fc1f23154, type: 3}
 --- !u!50 &645329875148378114
 Rigidbody2D:
   serializedVersion: 4

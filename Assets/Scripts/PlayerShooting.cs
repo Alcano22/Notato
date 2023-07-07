@@ -27,9 +27,9 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && nextShootTime <= Time.time)
+        if (!reloading)
         {
-            if (!reloading)
+            if (Input.GetKey(KeyCode.Mouse0) && nextShootTime <= Time.time)
             {
                 if (!HasAmmo)
                 {
@@ -41,15 +41,22 @@ public class PlayerShooting : MonoBehaviour
 
                 Shoot();
             }
+            if (Input.GetKeyDown(KeyCode.R) && ammo < gun.Capacity)
+            {
+                StartCoroutine(ReloadCo());
+            }
         }
+
     }
 
     IEnumerator ReloadCo()
     {
+        int ammoToReload = gun.Capacity - ammo;
+
         reloading = true;
         while (ammo < gun.Capacity)
         {
-            yield return new WaitForSeconds(gun.ReloadTime / gun.Capacity);
+            yield return new WaitForSeconds(gun.ReloadTime / ammoToReload);
 
             ammo++;
             ammoCounter.UpdateAmmo(ammo);

@@ -14,7 +14,6 @@ public class Game : MonoBehaviour
     public bool CanSpawnEnemies;
 
     bool gameOver;
-    bool leaveGameOnNextEscapePress;
 
     [SerializeField] GameSettings settings;
     [SerializeField] Sound gameOverSound;
@@ -37,7 +36,7 @@ public class Game : MonoBehaviour
     {
         if (gameOver && Input.GetKeyUp(KeyCode.Space))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
     }
 

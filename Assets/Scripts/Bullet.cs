@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     public float speed;
     public float range;
 
+    [SerializeField] GameObject bulletBurstPrefab;
+
     Vector2 spawnPos;
     Rigidbody2D rb;
 
@@ -57,6 +59,9 @@ public class Bullet : MonoBehaviour
         {
             other.GetComponent<Enemy>().Damage(damage);
         }
+
+        BurstParticles particles = Instantiate(bulletBurstPrefab, transform.position, Quaternion.identity).GetComponent<BurstParticles>();
+        particles.Emit();
 
         Destroy(gameObject);
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -11,6 +12,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] float attackDamage;
     [SerializeField] Sound hitSound;
     [SerializeField] GameObject heartPrefab;
+    [SerializeField] GameObject burstParticlesPrefab;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     Transform player;
     Rigidbody2D rb;
@@ -51,7 +54,15 @@ public class Enemy : MonoBehaviour
 
         DropHeart();
 
+        EmitParticles();
+
         Destroy(gameObject);
+    }
+
+    void EmitParticles()
+    {
+        BurstParticles particles = Instantiate(burstParticlesPrefab, transform.position, Quaternion.identity).GetComponent<BurstParticles>();
+        particles.Emit(spriteRenderer.color);
     }
 
     void DropHeart()
@@ -67,6 +78,7 @@ public class Enemy : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         Game.Instance.CurrentWave.OnEnemyHitPlayer();
+        EmitParticles();
 
         other.GetComponent<Player>().Damage(attackDamage);
         Destroy(gameObject);
