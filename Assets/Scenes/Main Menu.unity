@@ -5768,6 +5768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.5
+  gameSettings: {fileID: 11400000, guid: 63683396a2c2bbb4bb2e9805b2498090, type: 2}
 --- !u!1 &1634636447
 GameObject:
   m_ObjectHideFlags: 0

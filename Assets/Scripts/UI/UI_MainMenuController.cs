@@ -11,10 +11,21 @@ public class UI_MainMenuController : MonoBehaviour
     static readonly Vector2Int CREDITS_SECTION_POSITION = new Vector2Int(0, -1);
 
     [SerializeField] float smoothTime;
+    [SerializeField] GameSettings gameSettings;
 
     void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    void Start()
+    {
+        gameSettings.Load();
+    }
+
+    void OnApplicationQuit()
+    {
+        gameSettings.Save();
     }
 
     public void SwitchSection(Vector2Int sectionPosition)
